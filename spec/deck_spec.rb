@@ -1,6 +1,5 @@
-require 'rspec'
-require './lib/card'
-require './lib/deck'
+
+require 'spec_helper'
 
 RSpec.describe Deck do 
   before :each do 
