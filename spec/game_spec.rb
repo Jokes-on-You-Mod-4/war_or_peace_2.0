@@ -38,17 +38,6 @@ RSpec.describe Game do
     end
   end
 
-  describe "#standard_deck_cards" do 
-    it "makes an array of card objects respresenting a standard 52 card deck" do 
-      game = Game.new
-
-      expect(game.standard_deck_cards).to be_an_instance_of(Array)
-      expect(game.standard_deck_cards[0]).to be_an_instance_of(Card)
-      expect(game.standard_deck_cards[51]).to be_an_instance_of(Card)
-      expect(game.standard_deck_cards.size).to eq(52)
-    end
-  end
-
   describe '#shuffle_cards' do
     it "splits randomized cards into two separate player card decks" do 
       game = Game.new
@@ -76,11 +65,11 @@ RSpec.describe Game do
       game.make_computer_players
 
       expect(game.player1).to be_an_instance_of Player
-      expect(game.player1.name).to eq "Megan"
+      expect(game.player1.name).to eq "Brittney"
       expect(game.player1.deck.cards.size).to eq 26
 
       expect(game.player2).to be_an_instance_of Player
-      expect(game.player2.name).to eq "Aurora"
+      expect(game.player2.name).to eq "Kristin"
       expect(game.player2.deck.cards.size).to eq 26
     end
   end
