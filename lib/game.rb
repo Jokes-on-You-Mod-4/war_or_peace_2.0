@@ -29,8 +29,8 @@ class Game
   end
 
   def make_computer_players
-    @player1 = Player.new("Megan", @player1_deck)
-    @player2 = Player.new("Aurora", @player2_deck)
+    @player1 = Player.new("Brittney", @player1_deck)
+    @player2 = Player.new("Kristin", @player2_deck)
   end
 
   def self.set_up
@@ -47,13 +47,12 @@ class Game
 
   def begin_game_response_check
     response = gets.chomp
-    if response == "GO" || response == "go" || response == "Go" || response == "g"
+    if response.downcase == "go" || response == "g"
       start
-    elsif response == "quit" || response == "q"
+    elsif response.downcase == "quit" || response == "q"
       exit
     else
-      puts "Please enter 'GO' if you would still like to play this game.
-      If you would like to exit, please enter 'quit' or 'q'."
+      puts "Please enter 'g', 'go', 'Go', or 'GO' if you would still like to play this game.\nIf you would like to exit, please enter 'QUIT', 'quit', or 'q'."
       begin_game_response_check
     end
   end
