@@ -29,6 +29,12 @@ RSpec.describe Game do
       expect(game.cards[0]).to be_an_instance_of(Card)
       expect(game.cards[51]).to be_an_instance_of(Card)
       expect(game.cards.size).to eq(52)
+
+      expect(game.player1_deck).to eq []
+      expect(game.player2_deck).to eq []
+
+      expect(game.player1).to eq nil
+      expect(game.player2).to eq nil
     end
   end
 
@@ -61,9 +67,34 @@ RSpec.describe Game do
   end
 
   describe "#make_computer_players" do 
-    
+    it "generates two computer players" do
+      game = Game.new
+      expect(game.player1).to eq nil
+      expect(game.player2).to eq nil
+      
+      game.shuffle_cards
+      game.make_computer_players
+
+      expect(game.player1).to be_an_instance_of Player
+      expect(game.player1.name).to eq "Megan"
+      expect(game.player1.deck.cards.size).to eq 26
+
+      expect(game.player2).to be_an_instance_of Player
+      expect(game.player2.name).to eq "Aurora"
+      expect(game.player2.deck.cards.size).to eq 26
+    end
   end
 
+  describe "#start" do 
+    it "begins and completes a game simulation" do 
+      game = Game.new
+
+      game.shuffle_cards
+      game.make_computer_players
+
+      # expect(game.start).to eq []
+    end
+  end
 
 
 end
