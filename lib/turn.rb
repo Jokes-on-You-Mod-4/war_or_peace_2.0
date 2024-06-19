@@ -14,11 +14,37 @@ class Turn
   def type
     if is_basic?
       basic_turn_outcome
+    elsif is_dead_by_default?
+      deadly_default_outcome
     elsif is_war?
       war_turn_outcome
     else
       @winner = nil
       @turn_type = :mutual_assured_destruction
+    end
+  end
+
+  def is_dead_by_default?
+    @player1.deck.cards.size < 3 || @player2.deck.cards.size < 3
+  end
+
+  def deadly_default_outcome
+    if @player1.deck.cards.size > @player2.deck.cards.size
+      @winner = @player1
+      @loser = @player2
+      @turn_type = :war
+    elsif @player1.deck.cards.size < @player2.deck.cards.size
+      @winner = @player2
+      @loser = @player1
+      @turn_type = :war
+    elsif @player1.deck.card[1].rank > @player2.deck.card[1].rank
+      @winner = @player1
+      @loser = @player2
+      @turn_type = :war
+    elsif @player1.deck.card[1].rank < @player2.deck.card[1].rank
+      @winner = @player2
+      @loser = @player1
+      @turn_type = :war
     end
   end
 
@@ -63,8 +89,6 @@ class Turn
   end
 
   def push_cards_to_spoils(decision)
-
-    # require 'pry'; binding.pry
     spoil_calculation(decision)
     p1_spoils = @winner.deck.cards.shift(@spoil_n)
     p2_spoils = @loser.deck.cards.shift(@spoil_n)
@@ -81,9 +105,12 @@ class Turn
   end
 
   def award_spoils(winner)
-    spoils = @spoils_of_war
-    @spoils_of_war = []
-    winner.deck.cards.concat(spoils)
+    if winner != "No Winner"
+      spoils = @spoils_of_war
+      @spoils_of_war = []
+      winner.deck.cards.concat(spoils)
+    end
+    winner
   end
 
   def push_cards_to_trash

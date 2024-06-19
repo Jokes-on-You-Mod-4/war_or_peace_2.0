@@ -334,31 +334,36 @@ RSpec.describe Turn do
       expect(@sam.deck.cards).to eq [ @card16 ]
       expect(@war_turn.spoils_of_war).to eq []
     end
+
+  # :mutual_assured_destruction
+    it "awards no spoils if it is mutual assured destruction" do 
+      expect(@mad_turn.spoils_of_war).to eq []
+
+      expect(@abe.deck.cards).to eq [ @card17, @card18, @card21, @card24 ]
+      expect(@bob.deck.cards).to eq [ @card20, @card19, @card22, @card23 ]
+      
+      expect(@mad_turn.type).to eq :mutual_assured_destruction
+      winner = @mad_turn.winner
+
+      expect(@mad_turn.award_spoils(winner)).to eq "No Winner"
+
+      expect(@mad_turn.spoils_of_war).to eq []
+
+      expect(@abe.deck.cards).to eq [ @card17, @card18, @card21, @card24 ]
+      expect(@bob.deck.cards).to eq [ @card20, @card19, @card22, @card23 ]
+    end
   end
 
   describe '#push_cards_to_trash' do
   # :mutual_assured_destruction
     it "removes each of the player's top three cards" do
-      expect(@mad_turn.spoils_of_war).to eq []
-
-      expect(@abe.deck.cards.size).to eq 4
-      expect(@bob.deck.cards.size).to eq 4
-
-      expect(@abe.deck.cards[0].rank).to eq 11
-      expect(@bob.deck.cards[0].rank).to eq 11
-
-      expect(@abe.deck.cards[2].rank).to eq 8
-      expect(@bob.deck.cards[2].rank).to eq 8
+      expect(@abe.deck.cards).to eq [ @card17, @card18, @card21, @card24 ]
+      expect(@bob.deck.cards).to eq [ @card20, @card19, @card22, @card23 ]
       
-      expect(@mad_turn.type).to eq :mutual_assured_destruction
-      winner = @mad_turn.winner
-      expect(winner).to eq "No Winner"
-      @mad_turn.pile_cards
+      @mad_turn.push_cards_to_trash
 
-      expect(@mad_turn.spoils_of_war).to eq []
-
-      expect(@abe.deck.cards[0]).to eq @card24
-      expect(@bob.deck.cards[0]).to eq @card23
+      expect(@abe.deck.cards).to eq [@card24]
+      expect(@bob.deck.cards).to eq [@card23]
     end
   end
 end
