@@ -1,3 +1,7 @@
-game = Game.new
+require './lib/card'
+require './lib/deck'
+require './lib/player'
+require './lib/turn'
+require './lib/game'
 
-game.start
+Game.set_up
